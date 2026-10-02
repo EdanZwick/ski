@@ -7,7 +7,7 @@ Morzine, Méribel, La Tania, La Plagne and Megève.
 
 Open `index.html` in a modern browser and choose **Load historical data**.
 No installation, build or API key is required. An internet connection is required
-to retrieve ERA5 historical records from Open-Meteo. If your browser restricts
+to retrieve ERA5/ERA5-Land historical records from Open-Meteo. If your browser restricts
 requests from local files, serve the page as described below.
 
 After loading, all statistics and filters work without further requests in the
@@ -57,12 +57,13 @@ repository settings or confirm that a deployment has completed.
 
 ## Research limitations
 
-The display uses **ECMWF/Copernicus ERA5 reanalysis via Open-Meteo**, not forecasts,
+The display uses **ECMWF/Copernicus ERA5 and ERA5-Land reanalysis via Open-Meteo**, not forecasts,
 resort-reported base depths or independently validated station observations.
 The common target sample is **2016–2025**, not a 30-year climate normal.
 Direct archive access was unavailable in the development environment; historical
 data is therefore requested by the browser, not embedded as unverified numbers.
-Failed requests remain missing and can be retried without reloading successful years.
+Failed requests remain missing and can be retried without reloading successful
+year/model requests. Snow depth uses ERA5-Land; all other measures use ERA5.
 
 Weeks are fixed **UTC calendar date blocks**: days 1–7, 8–14, 15–21, 22–28,
 and 29–month end. The last period has three days in March and two in April;
@@ -75,20 +76,25 @@ The counts can overlap. Missing records or unexpected units exclude that metric�
 year/period, not replace it with zero. Per-value year counts and contributing
 years make partial coverage explicit.
 
-ERA5’s approximately 25 km grid cannot resolve individual ski slopes.
+ERA5’s approximately 25 km grid and ERA5-Land’s approximately 11 km grid cannot resolve individual ski slopes.
 Approximate locality coordinates select grid cells, with elevation downscaling
 disabled; nearby areas can share cells. Returned grid coordinates and elevations
-are shown in the source notebook. Modeled snow depth is not groomed piste depth.
+are shown by model in the source notebook. Modeled snow depth is not groomed piste depth;
+Open-Meteo warns that ERA5-Land snow depth tends to be overestimated.
+The API converts snowfall water equivalent using a fixed 7:1 snow-to-water depth
+ratio. Snow depth and snowfall come from different model grids.
 **Total precipitation includes snow’s water equivalent; liquid rain is separate.**
 
 Sources: [Open-Meteo historical API documentation](https://open-meteo.com/en/docs/historical-weather-api),
 [provider API specification](https://github.com/open-meteo/open-meteo/blob/main/openapi/historical-weather.yml),
 [Copernicus ERA5](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels),
-and [Hersbach et al. (2020)](https://doi.org/10.1002/qj.3803).
-Data attribution: Open-Meteo, CC BY 4.0; ECMWF/Copernicus ERA5.
+[Copernicus ERA5-Land](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land),
+[Hersbach et al. (2020)](https://doi.org/10.1002/qj.3803), and
+[Muñoz-Sabater et al. (2021)](https://doi.org/10.5194/essd-13-4349-2021).
+Data attribution: Open-Meteo, CC BY 4.0; ECMWF/Copernicus ERA5 and ERA5-Land.
 The free API is subject to non-commercial usage terms and rate limits.
 
 The dashboard uses no external libraries, fonts or analytics. Its only data
-requests are ten sequential annual, multi-location archive requests after the
+requests are twenty sequential annual, multi-location archive requests (two models per year) after the
 user presses the load button; a request times out after 45 seconds.
 There is no existing build, lint or automated test suite in this repository.

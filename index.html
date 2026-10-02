@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Compare March and April week by week across five French Alpine ski areas using historical ERA5 snow and weather data.">
+  <meta name="description" content="Compare March and April week by week across five French Alpine ski areas using historical ERA5 and ERA5-Land snow and weather data.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23142d3d'/%3E%3Cpath d='M6 51 28 12 58 51Z' fill='%2385d8cf'/%3E%3C/svg%3E">
   <title>Spring in the Alps · Snow & weather research</title>
   <style>
@@ -124,14 +124,15 @@
     <details class="methods" id="methodology" open>
       <summary>Methodology, reliability & source notebook</summary>
       <div class="method-grid">
-        <div><h3>Historical data, not monthly interpolation</h3><p>The browser requests March 1–April 30 for each year from <strong>2016 through 2025</strong> using Open-Meteo’s historical API with the <strong>ERA5</strong> model explicitly selected. This is a ten-year descriptive sample, not a 30-year climate normal or measured trend. ERA5 is ECMWF/Copernicus reanalysis combining observations and atmospheric modeling.</p><p>No weekly research values are bundled: direct archive access was unavailable in the development environment on 2 October 2026. Successful browser downloads are aggregated locally; unavailable records stay missing. The old monthly summaries are not used as weekly evidence.</p></div>
+        <div><h3>Historical data, not monthly interpolation</h3><p>The browser requests March 1–April 30 for each year from <strong>2016 through 2025</strong> using Open-Meteo’s historical API: <strong>ERA5-Land for snow depth</strong> and <strong>ERA5 for all other measures</strong>, in separate requests. This is a ten-year descriptive sample, not a 30-year climate normal or measured trend. These are ECMWF/Copernicus reanalyses combining observations and modeling.</p><p>No weekly research values are bundled: direct archive access was unavailable in the development environment on 2 October 2026. Successful browser downloads are aggregated locally; unavailable records stay missing. The old monthly summaries are not used as weekly evidence.</p></div>
         <div><h3>Exact weekly calculation</h3><p>Within each month, use days 1–7, 8–14, 15–21, 22–28 and 29–month end. Dates and daily boundaries are <strong>UTC</strong>, not local ski-day boundaries. For each year and period, average temperatures and hourly snow depth; sum snowfall, rain and precipitation; count snow and rain days. Then take the arithmetic mean of the complete yearly periods, with equal weight per year.</p><p>A metric needs every expected daily value (and all 24 hourly values per day for depth) to contribute a year. Otherwise that year is excluded for that metric only. Coverage is displayed and exported; values with different year coverage are not directly comparable. Zero is retained; missing data is never zero-filled. Week 5 totals cover only two or three days.</p></div>
-        <div><h3>Snow, rain and temperatures</h3><p><strong>Snow depth</strong> is mean modeled grid-cell snow depth, converted from metres to centimetres—not a resort-reported base depth. Fresh snowfall is accumulated new snow, not settled depth. A <strong>snow day</strong> has at least 1 cm of modeled snowfall; a <strong>rain day</strong> has at least 1 mm of liquid rain. Both can occur on the same day.</p><p>Daily maximum and minimum temperatures are averaged separately. Rain totals exclude snowfall; total precipitation includes snow’s water equivalent. The API’s modeled precipitation-phase partition and snow-density assumptions add uncertainty: do not infer observed rain/snow ratios or piste conditions.</p></div>
-        <div><h3>Mountain-scale limitations</h3><p>Requests use approximate locality reference coordinates, not weather stations or summit points. ERA5 has an approximately 0.25° (~25 km) grid; nearby resorts can share a cell. Automatic elevation downscaling is disabled (<code>elevation=nan</code>) to retain grid conditions. Returned coordinates and elevations are listed below and in the CSV.</p><p>Terrain, altitude, aspect, snowmaking and grooming are not resolved at piste scale. This cannot rank ski-area snow reliability, establish lift openings or assess avalanche safety. For local observed conditions, consult <a href="https://meteo.data.gouv.fr/">Météo-France station and mountain observations</a>.</p></div>
+        <div><h3>Snow, rain and temperatures</h3><p><strong>Snow depth</strong> is mean modeled grid-cell snow depth, converted from metres to centimetres—not a resort-reported base depth. Open-Meteo warns that <strong>ERA5-Land snow depth tends to be overestimated</strong>. Fresh snowfall is accumulated new snow, not settled depth; the API converts water equivalent using a fixed 7:1 snow-to-water depth ratio. A <strong>snow day</strong> has at least 1 cm of modeled snowfall; a <strong>rain day</strong> has at least 1 mm of liquid rain. Both can occur on the same day.</p><p>Daily maximum and minimum temperatures are averaged separately. Rain totals exclude snowfall; total precipitation includes snow’s water equivalent. Modeled precipitation phase and snow density add uncertainty. Depth and snowfall come from different model grids: do not use them to infer observed snowpack changes or piste conditions.</p></div>
+        <div><h3>Mountain-scale limitations</h3><p>Requests use approximate locality reference coordinates, not weather stations or summit points. ERA5 has a 0.25° (~25 km) grid and ERA5-Land a 0.1° (~11 km) grid; nearby resorts can share cells. Automatic elevation downscaling is disabled (one <code>nan</code> elevation per location) to retain grid conditions. Returned coordinates and elevations for each model are listed below and in the CSV.</p><p>Terrain, altitude, aspect, snowmaking and grooming are not resolved at piste scale. This cannot rank ski-area snow reliability, establish lift openings or assess avalanche safety. For local observed conditions, consult <a href="https://meteo.data.gouv.fr/">Météo-France station and mountain observations</a>.</p></div>
       </div>
       <div class="sources"><h3>Sources & reproducibility</h3><ul>
         <li><a href="https://open-meteo.com/en/docs/historical-weather-api">Open-Meteo historical API: variables, units and reanalysis documentation</a>; <a href="https://github.com/open-meteo/open-meteo/blob/main/openapi/historical-weather.yml">provider’s API specification</a>.</li>
         <li><a href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels">Copernicus Climate Data Store: ERA5 hourly single-level data</a>; <a href="https://doi.org/10.1002/qj.3803">Hersbach et al. (2020), The ERA5 global reanalysis</a>.</li>
+        <li><a href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land">Copernicus Climate Data Store: ERA5-Land hourly data</a>; <a href="https://doi.org/10.5194/essd-13-4349-2021">Muñoz-Sabater et al. (2021), ERA5-Land</a>. Model availability and snow-depth warnings: <a href="https://open-meteo.com/en/docs/historical-weather-api#data_sources">provider documentation</a>.</li>
         <li>Weather data by <a href="https://open-meteo.com/">Open-Meteo</a>, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; derived weekly statistics calculated by this display. Free API access is subject to the provider’s non-commercial usage terms and rate limits.</li>
       </ul><h3>Requested locations & returned grid cells</h3><ul id="locations"></ul><h3>Exact historical requests</h3><p class="small">These links reproduce each multi-location annual request. CSV includes the contributing years, request URLs and retrieval timestamps for each value.</p><ul id="requests"></ul></div>
     </details>
@@ -157,6 +158,9 @@
       rainDays: { title: "Rain days", unit: "days/period", field: "rain_sum", threshold: 1, description: "Mean yearly count of UTC days with at least 1 mm of modeled liquid rain. Rain and snow days can overlap." }
     };
     const years = Array.from({ length: 10 }, (_, i) => 2016 + i);
+    const models = ["era5", "era5_land"];
+    const jobs = years.flatMap(year => models.map(model => ({ year, model, id: year + "-" + model })));
+    const modelFor = key => key === "depth" ? "era5_land" : "era5";
     const periods = ["mar", "apr"].flatMap((month, index) => Array.from({ length: 5 }, (_, week) => ({
       id: month + (week + 1), month, number: index + 3, start: week * 7 + 1,
       end: Math.min(week * 7 + 7, index === 0 ? 31 : 30),
@@ -178,13 +182,14 @@
     const visiblePeriods = () => periods.filter(period => month === "both" || month === period.month);
     const average = values => values.reduce((sum, value) => sum + value, 0) / values.length;
     const dateFor = (year, period, day) => `${year}-${String(period.number).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    function requestURL(year) {
+    function requestURL(year, model) {
       const params = new URLSearchParams({
         latitude: areas.map(area => area.lat).join(","), longitude: areas.map(area => area.lon).join(","),
-        start_date: `${year}-03-01`, end_date: `${year}-04-30`, models: "era5", elevation: "nan",
-        timezone: "GMT", hourly: "snow_depth",
-        daily: "temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,snowfall_sum"
+        start_date: `${year}-03-01`, end_date: `${year}-04-30`, models: model,
+        elevation: areas.map(() => "nan").join(","), timezone: "GMT"
       });
+      if (model === "era5_land") params.set("hourly", "snow_depth");
+      else params.set("daily", "temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,snowfall_sum");
       return "https://archive-api.open-meteo.com/v1/archive?" + params;
     }
     function aggregate(data, year) {
@@ -209,7 +214,7 @@
     }
     function statistic(area, period, key) {
       const samples = years.flatMap(year => {
-        const record = records.get(year)?.[area.id];
+        const record = records.get(year + "-" + modelFor(key))?.[area.id];
         const value = record?.values[period.id][key];
         return Number.isFinite(value) ? [{ year, value, record }] : [];
       });
@@ -227,7 +232,7 @@
         const scroll = element("div", undefined, "scroll-table"); scroll.tabIndex = 0;
         scroll.setAttribute("role", "region"); scroll.setAttribute("aria-label", measure.title + "; scroll horizontally for later weeks");
         const table = element("table");
-        table.append(element("caption", measure.unit + " · 2016–2025 mean · n/10 complete years · — = unavailable, not zero"));
+        table.append(element("caption", measure.unit + " · " + (key === "depth" ? "ERA5-Land" : "ERA5") + " · 2016–2025 mean · n/10 complete years · — = unavailable, not zero"));
         const head = element("thead"), header = element("tr"), first = element("th", "Ski area"); first.scope = "col"; header.append(first);
         for (const period of visiblePeriods()) {
           const cell = element("th", period.label); cell.scope = "col";
@@ -257,9 +262,9 @@
       el("download").disabled = !available || loading;
       el("locations").replaceChildren();
       for (const area of areas) {
-        const grids = [...new Set(years.flatMap(year => {
-          const record = records.get(year)?.[area.id];
-          return record ? [`${record.latitude}, ${record.longitude}; elevation ${record.elevation ?? "unavailable"} m`] : [];
+        const grids = [...new Set(jobs.flatMap(job => {
+          const record = records.get(job.id)?.[area.id];
+          return record ? [`${job.model}: ${record.latitude}, ${record.longitude}; elevation ${record.elevation ?? "unavailable"} m`] : [];
         }))];
         el("locations").append(element("li", `${area.name}: requested ${area.lat}, ${area.lon} → ${grids.join(" / ") || "grid not yet retrieved"}`));
       }
@@ -281,31 +286,31 @@
       loading = true; el("load").disabled = true; render();
       const failures = [];
       try {
-        for (const year of years) {
-          if (records.has(year)) continue;
-          el("status").textContent = `Loading ${year} · ${records.size}/10 annual requests complete…`;
+        for (const { year, model, id } of jobs) {
+          if (records.has(id)) continue;
+          el("status").textContent = `Loading ${year} ${model} · ${records.size}/20 annual model requests complete…`;
           const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 45000);
           try {
-            const response = await fetch(requestURL(year), { signal: controller.signal, credentials: "omit" });
+            const response = await fetch(requestURL(year, model), { signal: controller.signal, credentials: "omit" });
             if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
             if (!Array.isArray(data) || data.length !== areas.length) throw new Error("Unexpected location count");
             const retrieved = new Date().toISOString(), annual = {};
             for (const [index, area] of areas.entries()) {
               const entry = data[index];
-              if (!entry || entry.error || !Number.isFinite(entry.latitude) || !Number.isFinite(entry.longitude) || !Array.isArray(entry.daily?.time) || !Array.isArray(entry.hourly?.time)) throw new Error("Incomplete archive response");
+              if (!entry || entry.error || !Number.isFinite(entry.latitude) || !Number.isFinite(entry.longitude) || !Array.isArray((model === "era5_land" ? entry.hourly : entry.daily)?.time)) throw new Error("Incomplete archive response");
               annual[area.id] = { values: aggregate(entry, year), latitude: entry.latitude, longitude: entry.longitude, elevation: entry.elevation, retrieved };
             }
-            records.set(year, annual);
+            records.set(id, annual);
           } catch (error) {
-            failures.push(`${year}: ${error.name === "AbortError" ? "request timed out" : error.message}`);
+            failures.push(`${year} ${model}: ${error.name === "AbortError" ? "request timed out" : error.message}`);
             if (!records.size || /HTTP (429|403)/.test(error.message)) break;
           } finally { clearTimeout(timer); }
         }
       } finally {
-        loading = false; el("load").disabled = records.size === years.length;
-        el("load").textContent = records.size === years.length ? "Historical data loaded" : "Retry missing data";
-        el("status").textContent = `${records.size}/10 annual requests loaded. ` + (failures.length ? "Incomplete coverage; unavailable values are not zero. " + failures.join("; ") + ". Check your connection or try again later." : "Review per-value coverage; missing or unsupported variables remain unavailable.");
+        loading = false; el("load").disabled = records.size === jobs.length;
+        el("load").textContent = records.size === jobs.length ? "Historical data loaded" : "Retry missing data";
+        el("status").textContent = `${records.size}/20 annual model requests loaded. ` + (failures.length ? "Incomplete coverage; unavailable values are not zero. " + failures.join("; ") + ". Check your connection or try again later." : "Review per-value coverage; missing or unsupported variables remain unavailable.");
         render();
       }
     });
@@ -317,18 +322,18 @@
           result.samples.map(sample => sample.year).join(";"), "2016–2025", area.lat, area.lon,
           result.samples.map(({ year, record }) => `${year}: ${record.latitude},${record.longitude},${record.elevation ?? ""}`).join(";"),
           result.samples.map(({ year, record }) => `${year}: ${record.retrieved}`).join(";"),
-          result.samples.map(sample => requestURL(sample.year)).join(" "),
-          "ERA5; UTC; equal-weight mean of complete yearly periods; " + measure.description,
-          "Modeled ~25km grid, not piste observations; elevation downscaling disabled; nearby areas can share cells; week 5 is shorter; differing sample years limit comparison; blank means unavailable",
-          "Open-Meteo CC BY 4.0; ECMWF/Copernicus ERA5; weekly aggregation by Alpine fieldnotes"]);
+          result.samples.map(sample => requestURL(sample.year, modelFor(key))).join(" "),
+          modelFor(key) + "; UTC; equal-weight mean of complete yearly periods; " + measure.description,
+          "ERA5 ~25km / ERA5-Land ~11km grids, not piste observations; snow depth tends to be overestimated; snowfall uses fixed 7:1 snow-water ratio; elevation downscaling disabled; nearby areas can share cells; week 5 is shorter; differing sample years limit comparison; blank means unavailable",
+          "Open-Meteo CC BY 4.0; ECMWF/Copernicus ERA5 and ERA5-Land; weekly aggregation by Alpine fieldnotes"]);
       }
       const csv = "\uFEFF" + rows.map(row => row.map(value => '"' + String(value ?? "").replaceAll('"', '""') + '"').join(",")).join("\r\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
       const link = sourceLink(url, ""); link.download = "alpine-spring-" + month + ".csv"; document.body.append(link); link.click(); link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
-    for (const year of years) {
-      const item = element("li"); item.append(sourceLink(requestURL(year), `${year}: March 1–April 30 · all five locations · ERA5`));
+    for (const { year, model } of jobs) {
+      const item = element("li"); item.append(sourceLink(requestURL(year, model), `${year}: March 1–April 30 · all five locations · ${model}`));
       el("requests").append(item);
     }
     render();
