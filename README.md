@@ -17,6 +17,28 @@ python -m http.server 8000
 
 Then visit http://localhost:8000.
 
+## Publish with GitHub Pages
+
+The included workflow publishes only `index.html` after pushes to `main`.
+To enable it:
+
+1. In **Settings → Pages → Build and deployment**, choose **GitHub Actions**
+   as the source. Repository administrator access may be required.
+2. Merge the dashboard and workflow into `main`.
+3. In **Actions**, wait for **Deploy dashboard to GitHub Pages** to succeed.
+   If the changes were merged before Pages was enabled, run that workflow
+   manually with **Run workflow → main**.
+
+Once deployed, the default site address is **https://edanzwick.github.io/ski/**.
+The deployment's `github-pages` environment also links to the published URL.
+Subsequent pushes to `main` automatically update it; other branches do not deploy.
+No API keys, build dependencies or manually configured secrets are needed.
+
+GitHub Pages availability depends on the repository's visibility and account
+plan. The published dashboard will normally be publicly accessible, even when
+the source repository is private. This setup does not itself enable Pages in
+repository settings or confirm that a deployment has completed.
+
 ## Explore
 
 - Switch between April, May and a side-by-side comparison.
