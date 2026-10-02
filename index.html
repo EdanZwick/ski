@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore historical April and May snow and weather summaries for five French Alpine ski areas, with sources and data limitations.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23142d3d'/%3E%3Cpath d='M6 51 28 12 58 51Z' fill='%2385d8cf'/%3E%3C/svg%3E">
   <title>Spring in the Alps · Snow & weather research</title>
   <style>
     :root { color-scheme: light; --ink:#142d3d; --muted:#526775; --paper:#f5f7f8; --line:#d9e2e6; --teal:#007b77; --blue:#547bc2; }
@@ -114,7 +115,7 @@
     <section class="controls" aria-label="Comparison filters">
       <div class="control-top">
         <fieldset><legend>01 / Choose your month</legend><div class="segments" id="months"><button type="button" data-month="apr" aria-pressed="true">April</button><button type="button" data-month="may" aria-pressed="false">May</button><button type="button" data-month="both" aria-pressed="false">Compare</button></div></fieldset>
-        <div><label class="label" for="metric">02 / Explore a measure</label><select id="metric"><option value="depth">Reported base snow depth</option><option value="snowfall">Reported fresh snowfall</option><option value="snowDays">Reported snowfall days</option><option value="high">Average daily high temperature</option><option value="low">Average daily low temperature</option><option value="rain">Rainfall</option><option value="rainDays">Rainfall days</option></select></div>
+        <div><label class="label" for="metric">02 / Explore a measure</label><select id="metric"><option value="depth">Reported base snow depth</option><option value="snowfall">Reported fresh snowfall</option><option value="snowDays">Reported snowfall days</option><option value="high">Average daytime temperature</option><option value="low">Average nighttime temperature</option><option value="precip">Total precipitation (rain + snow)</option><option value="wetDays">Published rainy / wet days</option></select></div>
       </div>
       <fieldset class="resorts" id="resorts"><legend>03 / Include ski areas</legend></fieldset>
     </section>
@@ -131,22 +132,22 @@
       <div class="cards">
         <article class="card"><span class="number">01 / APRIL SNOW</span><h3>A substantial reporting spread</h3><p>Published April base-depth averages range from 26 cm in Morzine to 86 cm in La Tania and La Plagne. Reporting elevations and samples are not standardized: this is not a like-for-like snow-reliability ranking. <a href="#snow-sources">Snow sources</a></p></article>
         <article class="card"><span class="number">02 / MAY CAUTION</span><h3>No report ≠ no snow</h3><p>We could not verify comparable May base-depth, snowfall or snowfall-day summaries for these five areas. Do not infer bare mountains—or open lifts—from missing reports. <a href="#methodology">Coverage limitations</a></p></article>
-        <article class="card"><span class="number">03 / MOUNTAIN CONTEXT</span><h3>The village is not the summit</h3><p>Local temperature and rainfall averages cannot describe every slope. Elevation, aspect, grooming and snowmaking matter. Historical averages do not predict a particular visit or confirm lift operations. <a href="#methodology">How to interpret the data</a></p></article>
+        <article class="card"><span class="number">03 / SPRING WEATHER</span><h3>Warmer—and wetter—in May</h3><p>Within each area’s published summary, average daytime temperatures rise by 4–5°C from April to May, and total precipitation also increases. This includes snow’s water equivalent, not just rain. These local summaries do not describe every slope. <a href="#weather-sources">Weather sources</a></p></article>
       </div>
     </section>
     <section class="table-panel" aria-labelledby="table-title">
       <div class="section-heading"><h2 id="table-title">Behind the comparison</h2><button class="button" id="download" type="button">↓ Download CSV</button></div>
       <div class="scroll-table" tabindex="0" role="region" aria-label="Historical values table; scroll horizontally on small screens">
-        <table><caption id="table-caption">Monthly published summaries. Source links accompany every row; missing values are not zero.</caption><thead><tr><th scope="col">Ski area / month</th><th scope="col">Base depth<br>cm</th><th scope="col">Fresh snow<br>cm/month</th><th scope="col">Snow days<br>days/month</th><th scope="col">Avg high<br>°C</th><th scope="col">Avg low<br>°C</th><th scope="col">Rain<br>mm/month</th><th scope="col">Rain days<br>days/month</th><th scope="col">Sources</th></tr></thead><tbody id="table-body"></tbody></table>
+        <table><caption id="table-caption">Monthly published summaries. Source links accompany every row; missing values are not zero. Precipitation includes rain and the water equivalent of snow; rain-only totals are not verified.</caption><thead><tr><th scope="col">Ski area / month</th><th scope="col">Base depth<br>cm</th><th scope="col">Fresh snow<br>cm/month</th><th scope="col">Snow days<br>days/month</th><th scope="col">Avg daytime<br>°C</th><th scope="col">Avg nighttime<br>°C</th><th scope="col">Precipitation<br>mm/month</th><th scope="col">Rainy / wet days<br>days/month</th><th scope="col">Sources</th></tr></thead><tbody id="table-body"></tbody></table>
       </div>
-      <p class="small">Snow metrics: OnTheSnow resort summaries. Weather metrics: see linked local monthly climate summaries. “—” = not verified. CSV exports the selected areas and months, all measures, provenance and caveats.</p>
+      <p class="small">Snow: OnTheSnow resort summaries. Weather: Weather and Climate’s published local averages. Exact reference periods and elevations are unverified—not a standardized cross-resort climate ranking. “—” = not verified. CSV exports all measures for the selected areas and months, with provenance and caveats.</p>
     </section>
     <details class="methods" id="methodology" open>
       <summary>Methodology, reliability & source notebook</summary>
       <div class="method-grid">
         <div><h3>What “historical” means here</h3><p>This is a comparison of published historical summaries, not an analysis of downloaded daily station observations. Research date: <strong>2 October 2026</strong>. Direct source-page and archive-API access was unavailable in the research environment; values were recovered from source-specific web-search results. Indexed snapshots can lag the live pages. Treat the results as a preliminary, secondary-source comparison.</p><p>We do not claim a verified common 30-year climate normal, a fixed sample size, or a measured trend. No daily records were downloaded or independently re-aggregated. Unknown baselines and measurement elevations limit comparability.</p></div>
         <div><h3>Snow depth is not snowfall</h3><p><strong>Base depth</strong> is OnTheSnow’s published average reported base snow depth, not upper-mountain depth or an end-of-month value. The reporting elevation is not verified. <strong>Fresh snowfall</strong> is the published monthly snowfall average, not settled snowpack depth. <strong>Snow days</strong> is the provider’s snowfall-day average; a consistent event threshold and reporting coverage could not be verified.</p><p>Snow reports can be affected by operating calendars, observation practices, grooming and snowmaking. April averages may cover only part of the month. No verified May snow values are substituted with zeros.</p></div>
-        <div id="weather-method"><h3>Weather is local, not slope-wide</h3><p>Weather source verification is in progress. Unverified values are intentionally left blank.</p></div>
+        <div id="weather-method"><h3>One weather provider; baseline unverified</h3><p>All five areas use <strong>Weather and Climate</strong>’s published average daytime and nighttime temperatures, precipitation and rainy/wet days. We retain the provider’s whole-degree and whole-millimetre precision. We do not calculate an average daily mean from daytime and nighttime values.</p><p>The exact historical reference period for these monthly values could not be confirmed. Station provenance, coordinates and representative elevations are also unverified. Using one provider does not establish equivalent geographic reference points or a quality-controlled common climate normal.</p><p><strong>Rain limitation:</strong> the precipitation figures include rain and snow’s liquid-water equivalent. A separate rain-only total was not verified. Rainy/wet-day thresholds and treatment of mixed precipitation are unverified. Weather temperatures describe the source’s named locality, not a verified village altitude or upper slopes.</p></div>
         <div><h3>What this cannot establish</h3><p>These summaries are not forecasts, avalanche assessments, ski-opening calendars, or proof of skiable terrain. Cross-provider snow and weather figures must not be combined to infer a rain-to-snow ratio. Snow days and rain days can overlap; neither is a count of days with snow lying on the ground.</p><p>For a decision-grade follow-up, obtain a common period of quality-controlled daily station records from <a href="https://meteo.data.gouv.fr/">Météo-France open data</a>, document each station’s elevation and completeness, and use mountain snow observations or an explicitly labeled reanalysis for off-season snow coverage.</p></div>
       </div>
       <div class="sources" id="snow-sources"><h3>Snow sources · OnTheSnow historical snowfall</h3><p class="small">Source-specific indexed April rows supply the three snow measures. Exact sample years, reporting elevations and May coverage are unverified.</p><ol>
@@ -156,14 +157,20 @@
         <li><a href="https://www.onthesnow.co.uk/northern-alps/la-plagne/historical-snowfall">La Plagne historical snowfall</a> — April: 53 cm fresh snow, 6 snow days, 86 cm average base depth.</li>
         <li><a href="https://www.onthesnow.co.uk/northern-alps/megeve/historical-snowfall">Megève historical snowfall</a> — April: 27 cm fresh snow, 2 snow days, 41 cm average base depth.</li>
       </ol></div>
-      <div class="sources" id="weather-sources"><h3>Weather sources</h3><ul id="weather-links"></ul></div>
+      <div class="sources" id="weather-sources"><h3>Weather sources · Weather and Climate</h3><p class="small">Each link identifies the locality and month used. Source values retain their published precision; no daily mean temperatures were inferred from daytime/nighttime values. These are indexed-source summaries, not directly verified source-page snapshots.</p><ul>
+        <li>Morzine: <a href="https://weather-and-climate.com/morzine-April-averages">April</a> / <a href="https://weather-and-climate.com/morzine-May-averages">May</a></li>
+        <li>Méribel: <a href="https://weather-and-climate.com/meribel-April-averages">April</a> / <a href="https://weather-and-climate.com/meribel-May-averages">May</a></li>
+        <li>La Tania: <a href="https://weather-and-climate.com/la-tania-rhone-alps-fr-April-averages">April</a> / <a href="https://weather-and-climate.com/la-tania-rhone-alps-fr-May-averages">May</a></li>
+        <li>La Plagne: <a href="https://weather-and-climate.com/la-plagne-rhone-alps-fr-April-averages">April</a> / <a href="https://weather-and-climate.com/la-plagne-rhone-alps-fr-May-averages">May</a></li>
+        <li>Megève: <a href="https://weather-and-climate.com/megeve-April-averages">April</a> / <a href="https://weather-and-climate.com/megeve-May-averages">May</a></li>
+      </ul></div>
     </details>
   </main>
   <footer><div class="wrap">Alpine fieldnotes / April–May research · Published summaries, not live conditions · Works offline after download; external source links require internet.</div></footer>
   <script>
     "use strict";
     const snowRoot = "https://www.onthesnow.co.uk/northern-alps/";
-    const blankWeather = { high: null, low: null, rain: null, rainDays: null };
+    const blankWeather = { high: null, low: null, precip: null, wetDays: null };
     const areas = [
       { id: "morzine", name: "Morzine", apr: { depth: 26, snowfall: 31, snowDays: 2, ...blankWeather } },
       { id: "meribel", name: "Méribel", apr: { depth: 50, snowfall: 31, snowDays: 3, ...blankWeather } },
@@ -175,14 +182,32 @@
       area.may = { depth: null, snowfall: null, snowDays: null, ...blankWeather };
       area.snowSource = snowRoot + area.id + "/historical-snowfall";
     }
+    const weather = {
+      morzine: { apr: [11, 0, 132, 17], may: [15, 4, 186, 19], slug: "morzine" },
+      meribel: { apr: [7, -3, 114, 17], may: [12, 1, 139, 18], slug: "meribel" },
+      "la-tania": { apr: [6, -3, 114, 17], may: [11, 1, 137, 18], slug: "la-tania-rhone-alps-fr" },
+      "la-plagne": { apr: [5, -4, 113, 17], may: [10, 0, 131, 19], slug: "la-plagne-rhone-alps-fr" },
+      megeve: { apr: [9, -2, 127, 17], may: [14, 3, 166, 19], slug: "megeve" }
+    };
+    for (const area of areas) {
+      const data = weather[area.id];
+      area.weatherSources = {};
+      area.weatherLabel = "Weather";
+      area.weatherBaseline = "Weather and Climate: exact reference period unconfirmed";
+      for (const [m, name] of [["apr", "April"], ["may", "May"]]) {
+        const [high, low, precip, wetDays] = data[m];
+        Object.assign(area[m], { high, low, precip, wetDays });
+        area.weatherSources[m] = "https://weather-and-climate.com/" + data.slug + "-" + name + "-averages";
+      }
+    }
     const measures = {
       depth: { title: "Reported base snow depth", unit: "cm", description: "Average reported base snow depth. Not upper-slope depth, natural snow depth, or snow remaining at month-end.", family: "snow" },
       snowfall: { title: "Reported fresh snowfall", unit: "cm", description: "Published monthly fresh-snow total averages. Fresh snowfall and settled snowpack depth are different measures.", family: "snow" },
       snowDays: { title: "Reported snowfall days", unit: "days", description: "Published average days with reported snowfall per month. Reporting threshold and completeness are not verified.", family: "snow" },
-      high: { title: "Average daily high temperature", unit: "°C", description: "Monthly average of daily high temperatures for the named locality; not a summit temperature or a record maximum.", family: "weather" },
-      low: { title: "Average daily low temperature", unit: "°C", description: "Monthly average of daily low temperatures for the named locality; not a summit temperature or a record minimum.", family: "weather" },
-      rain: { title: "Rainfall", unit: "mm", description: "Published average monthly rainfall for the named locality. Not a mountain-wide precipitation estimate.", family: "weather" },
-      rainDays: { title: "Rainfall days", unit: "days", description: "Published average rainfall days per month. Rain and snow may occur on the same day; the event threshold is unverified.", family: "weather" }
+      high: { title: "Average daytime temperature", unit: "°C", description: "Weather and Climate’s published average daytime temperature. Named localities, not verified resort elevations, summit temperatures or record extremes.", family: "weather" },
+      low: { title: "Average nighttime temperature", unit: "°C", description: "Weather and Climate’s published average nighttime temperature. Named localities, not verified resort elevations, summit temperatures or record extremes.", family: "weather" },
+      precip: { title: "Total precipitation (rain + snow)", unit: "mm", description: "Average monthly precipitation, including snow’s liquid-water equivalent. This is not a rain-only total. A separate liquid-rainfall series was not verified.", family: "weather" },
+      wetDays: { title: "Published rainy / wet days", unit: "days", description: "The provider’s published rainy-day or wet-day average. Event threshold and treatment of mixed rain/snow are unverified; do not subtract snowfall days from this count.", family: "weather" }
     };
     const monthNames = { apr: "April", may: "May", both: "April & May" };
     let month = "apr";
@@ -240,7 +265,7 @@
       }
       el("chart-note").textContent = measure.family === "snow"
         ? "OnTheSnow published summaries · Baseline and reporting elevation unverified · May unavailable in this research · All bars share a zero-based scale."
-        : "Local published climate summaries · Not a common verified station baseline · Not slope-level observations · All bars share a scale with zero.";
+        : "Weather and Climate published summaries · Exact period and representative elevations unverified · Not a common station baseline · All bars share a scale with zero.";
       const body = el("table-body");
       body.replaceChildren();
       for (const area of included) {
@@ -250,13 +275,13 @@
           for (const key of Object.keys(measures)) row.append(element("td", format(area[m][key])));
           const sources = element("td");
           sources.append(sourceLink(area.snowSource, "Snow"));
-          if (area.weatherSources && area.weatherSources[m]) sources.append(document.createTextNode(" · "), sourceLink(area.weatherSources[m], "Weather"));
+          if (area.weatherSources && area.weatherSources[m]) sources.append(document.createTextNode(" · "), sourceLink(area.weatherSources[m], area.weatherLabel));
           row.append(sources); body.append(row);
         }
       }
       if (!included.length) { const row = element("tr"); const cell = element("td", "No ski areas selected."); cell.colSpan = 9; row.append(cell); body.append(row); }
       el("download").disabled = !included.length;
-      el("status").textContent = included.length + " ski areas. " + monthNames[month] + ". " + measure.title + ". " + values.length + " verified summary values.";
+      el("status").textContent = included.length + " ski areas. " + monthNames[month] + ". " + measure.title + ". " + values.length + " available published values.";
     }
     for (const area of areas) {
       const label = element("label", undefined, "resort-option");
@@ -272,9 +297,9 @@
     });
     el("metric").addEventListener("change", render);
     el("download").addEventListener("click", () => {
-      const rows = [["area", "month", "base_depth_cm", "snowfall_cm_per_month", "snow_days_per_month", "average_high_c", "average_low_c", "rainfall_mm_per_month", "rain_days_per_month", "snow_source", "weather_source", "research_date", "baseline", "limitations"]];
+      const rows = [["area", "month", "base_depth_cm", "snowfall_cm_per_month", "snow_days_per_month", "average_daytime_c", "average_nighttime_c", "total_precipitation_mm_per_month", "published_rainy_or_wet_days_per_month", "snow_source", "weather_source", "research_date", "baseline", "limitations"]];
       for (const area of areas.filter(item => selected.has(item.id))) for (const m of selectedMonths()) {
-        rows.push([area.name, monthNames[m], ...Object.keys(measures).map(key => area[m][key]), area.snowSource, area.weatherSources?.[m] || "", "2026-10-02", "Exact baseline and sample counts unverified", "Indexed secondary-source summaries; local weather is not summit weather; snow reporting elevation unverified; blank means not verified, not zero; no verified May snow summaries"]);
+        rows.push([area.name, monthNames[m], ...Object.keys(measures).map(key => area[m][key]), area.snowSource, area.weatherSources?.[m] || "", "2026-10-02", "Snow: baseline and sample counts unverified; weather: " + area.weatherBaseline, "Indexed secondary-source summaries; local weather is not summit weather; precipitation includes snow water equivalent, not rain only; wet-day thresholds unverified; snow reporting elevation unverified; blank means not verified, not zero; no verified May snow summaries"]);
       }
       const csv = "\uFEFF" + rows.map(row => row.map(value => '"' + String(value ?? "").replaceAll('"', '""') + '"').join(",")).join("\r\n");
       const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
