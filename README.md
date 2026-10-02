@@ -58,6 +58,9 @@ repository settings or confirm that a deployment has completed.
   and contributing years. Tab into a chart, then use arrow keys to visit points,
   Home/End to jump to the first/last point, or Escape to clear the details.
   On small screens, scroll charts horizontally; full data tables remain available.
+- Select a ski area’s chart legend button to isolate its line and inspect
+  overlapping points; select it again to restore all selected areas. This changes
+  only that chart, not the tables, other charts or CSV export.
 - Missing values appear as gaps, never zeros. Week 5’s shorter duration is labeled
   on each chart; lines compare period averages, not daily observations.
 - Download every measure for the selected areas and periods as CSV, including
