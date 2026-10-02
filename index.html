@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore historical April and May snow and weather summaries for five French Alpine ski areas, with sources and data limitations.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23142d3d'/%3E%3Cpath d='M6 51 28 12 58 51Z' fill='%2385d8cf'/%3E%3C/svg%3E">
+  <title>Spring in the Alps · Snow & weather research</title>
+  <style>
+    :root { color-scheme: light; --ink:#142d3d; --muted:#526775; --paper:#f5f7f8; --line:#d9e2e6; --teal:#007b77; --blue:#547bc2; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button,input,select { font:inherit; }
+    button,select { cursor:pointer; }
+    a { color:#006b79; text-underline-offset:3px; }
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible { outline:3px solid #d08518; outline-offset:4px; }
+    .skip { position:absolute; left:1rem; top:-5rem; z-index:5; padding:.6rem; background:white; }
+    .skip:focus { top:1rem; }
+    .wrap { max-width:1180px; margin:auto; padding:0 28px; }
+    header { position:relative; overflow:hidden; color:white; background:#142d3d; padding:32px 0 56px; }
+    .brand { font-size:.8rem; letter-spacing:.18em; font-weight:750; text-transform:uppercase; }
+    .brand span { color:#85d8cf; }
+    .hero { position:relative; z-index:1; max-width:760px; margin-top:46px; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.16em; font-weight:700; font-size:.73rem; }
+    header .eyebrow { color:#9de0d6; }
+    h1 { margin:12px 0 16px; font-size:clamp(2.5rem,6vw,4.4rem); letter-spacing:-.05em; line-height:1.05; font-weight:650; }
+    header p { max-width:615px; color:#d4e2e9; font-size:1.06rem; }
+    .mountains { position:absolute; right:-40px; bottom:0; width:65%; height:260px; opacity:.25; }
+    .tags { display:flex; gap:10px; flex-wrap:wrap; margin-top:24px; }
+    .tag { border:1px solid #58717e; padding:4px 12px; border-radius:30px; font-size:.76rem; }
+    main { padding-top:28px; padding-bottom:40px; }
+    .notice { padding:18px 22px; background:#fff7e7; border:1px solid #e7cf99; border-radius:12px; font-size:.9rem; margin-bottom:26px; }
+    h2 { margin:0; font-size:1.5rem; letter-spacing:-.025em; }
+    h3 { margin:0 0 10px; font-size:1.07rem; }
+    p { margin:8px 0 16px; }
+    .muted,.small { color:var(--muted); }
+    .small { font-size:.83rem; }
+    .controls { background:white; padding:24px; border:1px solid var(--line); border-radius:14px; margin-bottom:24px; }
+    .control-top { display:flex; gap:24px; justify-content:space-between; flex-wrap:wrap; align-items:end; }
+    fieldset { border:0; padding:0; margin:0; }
+    legend,.label { display:block; font-size:.8rem; font-weight:700; margin-bottom:8px; }
+    .segments { display:flex; gap:4px; padding:4px; background:#edf2f4; border-radius:9px; }
+    .segments button { border:0; padding:8px 24px; border-radius:6px; background:transparent; color:var(--muted); }
+    .segments button[aria-pressed="true"] { background:var(--ink); color:white; }
+    select { padding:10px 38px 10px 12px; color:var(--ink); background:white; border:1px solid #aabdc7; border-radius:8px; max-width:100%; }
+    .resorts { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+    .resorts legend { float:left; width:100%; }
+    .resort-option { display:flex; align-items:center; gap:8px; padding:7px 12px; border:1px solid var(--line); border-radius:8px; font-size:.9rem; cursor:pointer; }
+    input { accent-color:var(--teal); width:17px; height:17px; }
+    .section-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:18px; }
+    .pill { font-size:.72rem; font-weight:650; color:#006760; background:#e2f3ef; border-radius:20px; padding:5px 12px; white-space:nowrap; }
+    .chart-panel,.table-panel,.methods { border:1px solid var(--line); border-radius:14px; background:white; padding:26px; margin:24px 0; }
+    .legend { display:flex; gap:20px; margin:16px 0; font-size:.82rem; }
+    .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:7px; background:var(--teal); }
+    .dot.may { background:var(--blue); }
+    .chart-row { display:grid; grid-template-columns:110px 1fr; gap:20px; padding:13px 0; border-bottom:1px solid #edf1f3; }
+    .chart-label { font-weight:650; font-size:.9rem; }
+    .bar-line { display:flex; align-items:center; gap:10px; min-height:32px; }
+    .bar-month { font-size:.74rem; width:30px; flex-shrink:0; color:var(--muted); }
+    .track { position:relative; height:14px; border-radius:4px; background:#edf2f4; flex:1; }
+    .bar { position:absolute; height:100%; border-radius:4px; background:var(--teal); min-width:2px; }
+    .bar.may { background:var(--blue); }
+    .zero { position:absolute; top:-3px; height:20px; width:1px; background:#6f808a; }
+    .bar-value { width:110px; font-size:.86rem; text-align:right; font-variant-numeric:tabular-nums; }
+    .missing { color:var(--muted); font-size:.85rem; padding:3px 0; }
+    .empty { padding:30px; text-align:center; color:var(--muted); background:#f5f7f8; border-radius:8px; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:24px 0; }
+    .card { padding:22px; border:1px solid var(--line); border-radius:12px; background:white; }
+    .card .number { display:block; color:var(--teal); font-size:.72rem; font-weight:750; letter-spacing:.12em; margin-bottom:14px; }
+    .card p { font-size:.9rem; margin-bottom:0; color:var(--muted); }
+    .scroll-table { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; font-size:.85rem; white-space:nowrap; }
+    caption { text-align:left; color:var(--muted); font-size:.8rem; padding-bottom:14px; white-space:normal; }
+    th,td { padding:13px 12px; border-bottom:1px solid var(--line); text-align:right; font-variant-numeric:tabular-nums; }
+    th:first-child,td:first-child { text-align:left; }
+    thead th { background:#f3f6f7; font-size:.75rem; white-space:normal; min-width:88px; vertical-align:bottom; }
+    td a { font-size:.76rem; }
+    .button { background:white; border:1px solid #aabdc7; color:var(--ink); padding:8px 15px; border-radius:8px; font-size:.85rem; white-space:nowrap; }
+    .button:disabled { opacity:.45; cursor:not-allowed; }
+    summary { cursor:pointer; font-size:1.15rem; font-weight:650; }
+    .method-grid { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:24px; font-size:.88rem; }
+    .method-grid p { color:var(--muted); }
+    .sources { margin-top:20px; padding-top:20px; border-top:1px solid var(--line); font-size:.85rem; }
+    .sources li { margin-bottom:8px; overflow-wrap:anywhere; }
+    footer { border-top:1px solid var(--line); padding:24px 0; color:var(--muted); font-size:.78rem; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media(max-width:700px) {
+      .wrap { padding:0 16px; } header { padding-bottom:34px; } .hero { margin-top:30px; }
+      .controls,.chart-panel,.table-panel,.methods { padding:18px; }
+      .cards,.method-grid { grid-template-columns:1fr; } .cards { gap:12px; }
+      .chart-row { grid-template-columns:85px 1fr; gap:8px; } .bar-value { width:92px; font-size:.76rem; }
+      .segments button { padding:8px 17px; } .section-heading { flex-wrap:wrap; gap:10px; }
+      .control-top>div { width:100%; } select { width:100%; } .mountains { width:100%; }
+    }
+    @media print { header { color:var(--ink); background:white; padding:12px 0; } header p,header .eyebrow { color:var(--muted); } .mountains,.controls,.button,.skip { display:none; } .hero { margin-top:10px; } .chart-panel,.card { break-inside:avoid; } .scroll-table { overflow:visible; } .wrap { max-width:none; padding:0; } body { font-size:11px; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#explore">Skip to comparison</a>
+  <header>
+    <svg class="mountains" viewBox="0 0 700 260" aria-hidden="true"><path fill="#77c4c0" d="M0 260 180 36 286 174 408 0 700 260Z"/><path fill="#d8eeed" d="m180 36-64 80 54-20 30 24 15-38ZM408 0l-72 95 69-29 35 24 30-5Z"/><path fill="#234c60" d="m0 260 296-141 96 84 148-94 160 151Z"/></svg>
+    <div class="wrap">
+      <div class="brand">Alpine fieldnotes <span>/ Spring research</span></div>
+      <div class="hero">
+        <div class="eyebrow">Five destinations · Two spring months</div>
+        <h1>After the winter peak.</h1>
+        <p>A closer look at April and May in Morzine, Méribel, La Tania, La Plagne and Megève. Compare historical snow summaries and local weather averages—not forecasts.</p>
+        <div class="tags"><span class="tag">April & May</span><span class="tag">French Alps</span><span class="tag">Sources & limitations included</span></div>
+      </div>
+    </div>
+  </header>
+  <main class="wrap" id="explore">
+    <div class="notice"><strong>Read the gaps, not just the numbers.</strong> Resort snow reports and local climate averages describe different things. The available snow summaries do not establish a common historical baseline or complete May coverage. “Not verified” never means zero snow. <a href="#methodology">Read the methodology.</a></div>
+    <noscript><p class="notice">Enable JavaScript to load the comparison, filters and downloadable data. Source links and methodology remain available below.</p></noscript>
+    <section class="controls" aria-label="Comparison filters">
+      <div class="control-top">
+        <fieldset><legend>01 / Choose your month</legend><div class="segments" id="months"><button type="button" data-month="apr" aria-pressed="true">April</button><button type="button" data-month="may" aria-pressed="false">May</button><button type="button" data-month="both" aria-pressed="false">Compare</button></div></fieldset>
+        <div><label class="label" for="metric">02 / Explore a measure</label><select id="metric"><option value="depth">Reported base snow depth</option><option value="snowfall">Reported fresh snowfall</option><option value="snowDays">Reported snowfall days</option><option value="high">Average daytime temperature</option><option value="low">Average nighttime temperature</option><option value="precip">Total precipitation (rain + snow)</option><option value="wetDays">Published rainy / wet days</option></select></div>
+      </div>
+      <fieldset class="resorts" id="resorts"><legend>03 / Include ski areas</legend></fieldset>
+    </section>
+    <section class="chart-panel" aria-labelledby="chart-title">
+      <div class="section-heading"><h2 id="chart-title">Reported base snow depth</h2><span class="pill" id="period">April</span></div>
+      <p class="small" id="metric-description"></p>
+      <div class="legend"><span><span class="dot"></span>April</span><span><span class="dot may"></span>May</span></div>
+      <div id="chart"></div>
+      <p class="small" id="chart-note"></p>
+      <p id="status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+    </section>
+    <section aria-labelledby="findings-title">
+      <div class="section-heading"><h2 id="findings-title">What the evidence tells us</h2><span class="small">Interpretation, not a snow guarantee</span></div>
+      <div class="cards">
+        <article class="card"><span class="number">01 / APRIL SNOW</span><h3>A substantial reporting spread</h3><p>Published April base-depth averages range from 26 cm in Morzine to 86 cm in La Tania and La Plagne. Reporting elevations and samples are not standardized: this is not a like-for-like snow-reliability ranking. <a href="#snow-sources">Snow sources</a></p></article>
+        <article class="card"><span class="number">02 / MAY CAUTION</span><h3>No report ≠ no snow</h3><p>We could not verify comparable May base-depth, snowfall or snowfall-day summaries for these five areas. Do not infer bare mountains—or open lifts—from missing reports. <a href="#methodology">Coverage limitations</a></p></article>
+        <article class="card"><span class="number">03 / SPRING WEATHER</span><h3>Warmer—and wetter—in May</h3><p>Within each area’s published summary, average daytime temperatures rise by 4–5°C from April to May, and total precipitation also increases. This includes snow’s water equivalent, not just rain. These local summaries do not describe every slope. <a href="#weather-sources">Weather sources</a></p></article>
+      </div>
+    </section>
+    <section class="table-panel" aria-labelledby="table-title">
+      <div class="section-heading"><h2 id="table-title">Behind the comparison</h2><button class="button" id="download" type="button">↓ Download CSV</button></div>
+      <div class="scroll-table" tabindex="0" role="region" aria-label="Historical values table; scroll horizontally on small screens">
+        <table><caption id="table-caption">Monthly published summaries. Source links accompany every row; missing values are not zero. Precipitation includes rain and the water equivalent of snow; rain-only totals are not verified.</caption><thead><tr><th scope="col">Ski area / month</th><th scope="col">Base depth<br>cm</th><th scope="col">Fresh snow<br>cm/month</th><th scope="col">Snow days<br>days/month</th><th scope="col">Avg daytime<br>°C</th><th scope="col">Avg nighttime<br>°C</th><th scope="col">Precipitation<br>mm/month</th><th scope="col">Rainy / wet days<br>days/month</th><th scope="col">Sources</th></tr></thead><tbody id="table-body"></tbody></table>
+      </div>
+      <p class="small">Snow: OnTheSnow resort summaries. Weather: Weather and Climate’s published local averages. Exact reference periods and elevations are unverified—not a standardized cross-resort climate ranking. “—” = not verified. CSV exports all measures for the selected areas and months, with provenance and caveats.</p>
+    </section>
+    <details class="methods" id="methodology" open>
+      <summary>Methodology, reliability & source notebook</summary>
+      <div class="method-grid">
+        <div><h3>What “historical” means here</h3><p>This is a comparison of published historical summaries, not an analysis of downloaded daily station observations. Research date: <strong>2 October 2026</strong>. Direct source-page and archive-API access was unavailable in the research environment; values were recovered from source-specific web-search results. Indexed snapshots can lag the live pages. Treat the results as a preliminary, secondary-source comparison.</p><p>We do not claim a verified common 30-year climate normal, a fixed sample size, or a measured trend. No daily records were downloaded or independently re-aggregated. Unknown baselines and measurement elevations limit comparability.</p></div>
+        <div><h3>Snow depth is not snowfall</h3><p><strong>Base depth</strong> is OnTheSnow’s published average reported base snow depth, not upper-mountain depth or an end-of-month value. The reporting elevation is not verified. <strong>Fresh snowfall</strong> is the published monthly snowfall average, not settled snowpack depth. <strong>Snow days</strong> is the provider’s snowfall-day average; a consistent event threshold and reporting coverage could not be verified.</p><p>Snow reports can be affected by operating calendars, observation practices, grooming and snowmaking. April averages may cover only part of the month. No verified May snow values are substituted with zeros.</p></div>
+        <div id="weather-method"><h3>One weather provider; baseline unverified</h3><p>All five areas use <strong>Weather and Climate</strong>’s published average daytime and nighttime temperatures, precipitation and rainy/wet days. We retain the provider’s whole-degree and whole-millimetre precision. We do not calculate an average daily mean from daytime and nighttime values.</p><p>The exact historical reference period for these monthly values could not be confirmed. Station provenance, coordinates and representative elevations are also unverified. Using one provider does not establish equivalent geographic reference points or a quality-controlled common climate normal.</p><p><strong>Rain limitation:</strong> the precipitation figures include rain and snow’s liquid-water equivalent. A separate rain-only total was not verified. Rainy/wet-day thresholds and treatment of mixed precipitation are unverified. Weather temperatures describe the source’s named locality, not a verified village altitude or upper slopes.</p></div>
+        <div><h3>What this cannot establish</h3><p>These summaries are not forecasts, avalanche assessments, ski-opening calendars, or proof of skiable terrain. Cross-provider snow and weather figures must not be combined to infer a rain-to-snow ratio. Snow days and rain days can overlap; neither is a count of days with snow lying on the ground.</p><p>For a decision-grade follow-up, obtain a common period of quality-controlled daily station records from <a href="https://meteo.data.gouv.fr/">Météo-France open data</a>, document each station’s elevation and completeness, and use mountain snow observations or an explicitly labeled reanalysis for off-season snow coverage.</p></div>
+      </div>
+      <div class="sources" id="snow-sources"><h3>Snow sources · OnTheSnow historical snowfall</h3><p class="small">Source-specific indexed April rows supply the three snow measures. Exact sample years, reporting elevations and May coverage are unverified.</p><ol>
+        <li><a href="https://www.onthesnow.co.uk/northern-alps/morzine/historical-snowfall">Morzine historical snowfall</a> — April: 31 cm fresh snow, 2 snow days, 26 cm average base depth.</li>
+        <li><a href="https://www.onthesnow.co.uk/northern-alps/meribel/historical-snowfall">Méribel historical snowfall</a> — April: 31 cm fresh snow, 3 snow days, 50 cm average base depth.</li>
+        <li><a href="https://www.onthesnow.co.uk/northern-alps/la-tania/historical-snowfall">La Tania historical snowfall</a> — April: 19 cm fresh snow, 3 snow days, 86 cm average base depth.</li>
+        <li><a href="https://www.onthesnow.co.uk/northern-alps/la-plagne/historical-snowfall">La Plagne historical snowfall</a> — April: 53 cm fresh snow, 6 snow days, 86 cm average base depth.</li>
+        <li><a href="https://www.onthesnow.co.uk/northern-alps/megeve/historical-snowfall">Megève historical snowfall</a> — April: 27 cm fresh snow, 2 snow days, 41 cm average base depth.</li>
+      </ol></div>
+      <div class="sources" id="weather-sources"><h3>Weather sources · Weather and Climate</h3><p class="small">Each link identifies the locality and month used. Source values retain their published precision; no daily mean temperatures were inferred from daytime/nighttime values. These are indexed-source summaries, not directly verified source-page snapshots.</p><ul>
+        <li>Morzine: <a href="https://weather-and-climate.com/morzine-April-averages">April</a> / <a href="https://weather-and-climate.com/morzine-May-averages">May</a></li>
+        <li>Méribel: <a href="https://weather-and-climate.com/meribel-April-averages">April</a> / <a href="https://weather-and-climate.com/meribel-May-averages">May</a></li>
+        <li>La Tania: <a href="https://weather-and-climate.com/la-tania-rhone-alps-fr-April-averages">April</a> / <a href="https://weather-and-climate.com/la-tania-rhone-alps-fr-May-averages">May</a></li>
+        <li>La Plagne: <a href="https://weather-and-climate.com/la-plagne-rhone-alps-fr-April-averages">April</a> / <a href="https://weather-and-climate.com/la-plagne-rhone-alps-fr-May-averages">May</a></li>
+        <li>Megève: <a href="https://weather-and-climate.com/megeve-April-averages">April</a> / <a href="https://weather-and-climate.com/megeve-May-averages">May</a></li>
+      </ul></div>
+    </details>
+  </main>
+  <footer><div class="wrap">Alpine fieldnotes / April–May research · Published summaries, not live conditions · Works offline after download; external source links require internet.</div></footer>
+  <script>
+    "use strict";
+    const snowRoot = "https://www.onthesnow.co.uk/northern-alps/";
+    const blankWeather = { high: null, low: null, precip: null, wetDays: null };
+    const areas = [
+      { id: "morzine", name: "Morzine", apr: { depth: 26, snowfall: 31, snowDays: 2, ...blankWeather } },
+      { id: "meribel", name: "Méribel", apr: { depth: 50, snowfall: 31, snowDays: 3, ...blankWeather } },
+      { id: "la-tania", name: "La Tania", apr: { depth: 86, snowfall: 19, snowDays: 3, ...blankWeather } },
+      { id: "la-plagne", name: "La Plagne", apr: { depth: 86, snowfall: 53, snowDays: 6, ...blankWeather } },
+      { id: "megeve", name: "Megève", apr: { depth: 41, snowfall: 27, snowDays: 2, ...blankWeather } }
+    ];
+    for (const area of areas) {
+      area.may = { depth: null, snowfall: null, snowDays: null, ...blankWeather };
+      area.snowSource = snowRoot + area.id + "/historical-snowfall";
+    }
+    const weather = {
+      morzine: { apr: [11, 0, 132, 17], may: [15, 4, 186, 19], slug: "morzine" },
+      meribel: { apr: [7, -3, 114, 17], may: [12, 1, 139, 18], slug: "meribel" },
+      "la-tania": { apr: [6, -3, 114, 17], may: [11, 1, 137, 18], slug: "la-tania-rhone-alps-fr" },
+      "la-plagne": { apr: [5, -4, 113, 17], may: [10, 0, 131, 19], slug: "la-plagne-rhone-alps-fr" },
+      megeve: { apr: [9, -2, 127, 17], may: [14, 3, 166, 19], slug: "megeve" }
+    };
+    for (const area of areas) {
+      const data = weather[area.id];
+      area.weatherSources = {};
+      area.weatherLabel = "Weather";
+      area.weatherBaseline = "Weather and Climate: exact reference period unconfirmed";
+      for (const [m, name] of [["apr", "April"], ["may", "May"]]) {
+        const [high, low, precip, wetDays] = data[m];
+        Object.assign(area[m], { high, low, precip, wetDays });
+        area.weatherSources[m] = "https://weather-and-climate.com/" + data.slug + "-" + name + "-averages";
+      }
+    }
+    const measures = {
+      depth: { title: "Reported base snow depth", unit: "cm", description: "Average reported base snow depth. Not upper-slope depth, natural snow depth, or snow remaining at month-end.", family: "snow" },
+      snowfall: { title: "Reported fresh snowfall", unit: "cm", description: "Published monthly fresh-snow total averages. Fresh snowfall and settled snowpack depth are different measures.", family: "snow" },
+      snowDays: { title: "Reported snowfall days", unit: "days", description: "Published average days with reported snowfall per month. Reporting threshold and completeness are not verified.", family: "snow" },
+      high: { title: "Average daytime temperature", unit: "°C", description: "Weather and Climate’s published average daytime temperature. Named localities, not verified resort elevations, summit temperatures or record extremes.", family: "weather" },
+      low: { title: "Average nighttime temperature", unit: "°C", description: "Weather and Climate’s published average nighttime temperature. Named localities, not verified resort elevations, summit temperatures or record extremes.", family: "weather" },
+      precip: { title: "Total precipitation (rain + snow)", unit: "mm", description: "Average monthly precipitation, including snow’s liquid-water equivalent. This is not a rain-only total. A separate liquid-rainfall series was not verified.", family: "weather" },
+      wetDays: { title: "Published rainy / wet days", unit: "days", description: "The provider’s published rainy-day or wet-day average. Event threshold and treatment of mixed rain/snow are unverified; do not subtract snowfall days from this count.", family: "weather" }
+    };
+    const monthNames = { apr: "April", may: "May", both: "April & May" };
+    let month = "apr";
+    const selected = new Set(areas.map(area => area.id));
+    const el = id => document.getElementById(id);
+    const format = value => value === null ? "—" : new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 }).format(value);
+    function element(tag, text, className) {
+      const node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      if (className) node.className = className;
+      return node;
+    }
+    function selectedMonths() { return month === "both" ? ["apr", "may"] : [month]; }
+    function sourceLink(url, label) { const link = element("a", label); link.href = url; return link; }
+    function render() {
+      const metric = el("metric").value;
+      const measure = measures[metric];
+      const included = areas.filter(area => selected.has(area.id));
+      const months = selectedMonths();
+      const values = included.flatMap(area => months.map(m => area[m][metric])).filter(v => v !== null);
+      const min = Math.min(0, ...values);
+      const max = Math.max(0, ...values);
+      const span = max - min || 1;
+      const zero = (0 - min) / span * 100;
+      el("chart-title").textContent = measure.title;
+      el("metric-description").textContent = measure.description;
+      el("period").textContent = monthNames[month];
+      el("chart").replaceChildren();
+      if (!included.length) el("chart").append(element("p", "Choose at least one ski area to compare.", "empty"));
+      for (const area of included) {
+        const row = element("div", undefined, "chart-row");
+        row.append(element("div", area.name, "chart-label"));
+        const bars = element("div");
+        for (const m of months) {
+          const value = area[m][metric];
+          const line = element("div", undefined, "bar-line");
+          line.append(element("span", monthNames[m].slice(0, 3), "bar-month"));
+          if (value === null) {
+            line.append(element("span", "Not verified", "missing"));
+          } else {
+            const track = element("div", undefined, "track");
+            track.setAttribute("aria-hidden", "true");
+            const bar = element("div", undefined, "bar " + m);
+            bar.style.left = Math.min(zero, (value - min) / span * 100) + "%";
+            bar.style.width = Math.abs(value) / span * 100 + "%";
+            if (value === 0) bar.style.minWidth = "0";
+            track.append(bar);
+            if (min < 0) { const axis = element("span", undefined, "zero"); axis.style.left = zero + "%"; track.append(axis); }
+            line.append(track, element("span", format(value) + " " + measure.unit, "bar-value"));
+          }
+          bars.append(line);
+        }
+        row.append(bars);
+        el("chart").append(row);
+      }
+      el("chart-note").textContent = measure.family === "snow"
+        ? "OnTheSnow published summaries · Baseline and reporting elevation unverified · May unavailable in this research · All bars share a zero-based scale."
+        : "Weather and Climate published summaries · Exact period and representative elevations unverified · Not a common station baseline · All bars share a scale with zero.";
+      const body = el("table-body");
+      body.replaceChildren();
+      for (const area of included) {
+        for (const m of months) {
+          const row = element("tr");
+          const label = element("th", area.name + " / " + monthNames[m]); label.scope = "row"; row.append(label);
+          for (const key of Object.keys(measures)) row.append(element("td", format(area[m][key])));
+          const sources = element("td");
+          sources.append(sourceLink(area.snowSource, "Snow"));
+          if (area.weatherSources && area.weatherSources[m]) sources.append(document.createTextNode(" · "), sourceLink(area.weatherSources[m], area.weatherLabel));
+          row.append(sources); body.append(row);
+        }
+      }
+      if (!included.length) { const row = element("tr"); const cell = element("td", "No ski areas selected."); cell.colSpan = 9; row.append(cell); body.append(row); }
+      el("download").disabled = !included.length;
+      el("status").textContent = included.length + " ski areas. " + monthNames[month] + ". " + measure.title + ". " + values.length + " available published values.";
+    }
+    for (const area of areas) {
+      const label = element("label", undefined, "resort-option");
+      const checkbox = element("input"); checkbox.type = "checkbox"; checkbox.checked = true; checkbox.value = area.id;
+      checkbox.addEventListener("change", () => { if (checkbox.checked) selected.add(area.id); else selected.delete(area.id); render(); });
+      label.append(checkbox, document.createTextNode(area.name)); el("resorts").append(label);
+    }
+    el("months").addEventListener("click", event => {
+      const button = event.target.closest("button[data-month]"); if (!button) return;
+      month = button.dataset.month;
+      for (const item of el("months").querySelectorAll("button")) item.setAttribute("aria-pressed", String(item === button));
+      render();
+    });
+    el("metric").addEventListener("change", render);
+    el("download").addEventListener("click", () => {
+      const rows = [["area", "month", "base_depth_cm", "snowfall_cm_per_month", "snow_days_per_month", "average_daytime_c", "average_nighttime_c", "total_precipitation_mm_per_month", "published_rainy_or_wet_days_per_month", "snow_source", "weather_source", "research_date", "baseline", "limitations"]];
+      for (const area of areas.filter(item => selected.has(item.id))) for (const m of selectedMonths()) {
+        rows.push([area.name, monthNames[m], ...Object.keys(measures).map(key => area[m][key]), area.snowSource, area.weatherSources?.[m] || "", "2026-10-02", "Snow: baseline and sample counts unverified; weather: " + area.weatherBaseline, "Indexed secondary-source summaries; local weather is not summit weather; precipitation includes snow water equivalent, not rain only; wet-day thresholds unverified; snow reporting elevation unverified; blank means not verified, not zero; no verified May snow summaries"]);
+      }
+      const csv = "\uFEFF" + rows.map(row => row.map(value => '"' + String(value ?? "").replaceAll('"', '""') + '"').join(",")).join("\r\n");
+      const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+      const link = sourceLink(url, ""); link.download = "alpine-spring-" + month + ".csv"; document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    render();
+  </script>
+</body>
+</html>
