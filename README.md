@@ -52,6 +52,14 @@ repository settings or confirm that a deployment has completed.
   snowfall, snow days, daily maximum/minimum temperatures, liquid rain,
   total precipitation and rain days.
 - Inspect date ranges and complete-year coverage alongside every weekly value.
+- Explore an interactive weekly line chart above each statistic’s table. Charts
+  follow the month and ski-area filters, with consistent area colors and line patterns.
+- Hover, tap or focus a chart point to see its value, units, date range, source model
+  and contributing years. Tab into a chart, then use arrow keys to visit points,
+  Home/End to jump to the first/last point, or Escape to clear the details.
+  On small screens, scroll charts horizontally; full data tables remain available.
+- Missing values appear as gaps, never zeros. Week 5’s shorter duration is labeled
+  on each chart; lines compare period averages, not daily observations.
 - Download every measure for the selected areas and periods as CSV, including
   contributing years, source requests, grid coordinates, retrieval times and caveats.
 
